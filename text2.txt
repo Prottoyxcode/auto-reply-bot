@@ -1,0 +1,17 @@
+def mimic_user_style(chat_history_text, retries=3, wait=5):
+    lines = [line.strip() for line in chat_history_text.strip().split('\n') if line.strip()]
+    if len(lines) < 2:
+        raise ValueError("Chat history needs at least two messages (style + prompt).")
+
+    style_messages = "\n".join(lines[:-1])
+    new_prompt = lines[-1]
+
+    prompt = f"""
+Analyze the user's writing style based on the following messages. Then reply to the final message using that style. Do not ask questions. Just give a confident, natural response.
+
+User's style examples:
+{style_messages}
+
+New message to respond to:
+{new_prompt}
+"""
